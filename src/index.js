@@ -5,11 +5,13 @@ import { createStore, applyMiddleware } from 'redux';
 
 import App from './components/app';
 import reducers from './reducers';
+import Async from './middlewares/async'
 
-const createStoreWithMiddleware = applyMiddleware()(createStore);
+const ReduxDevTools = window.devToolsExtension ? window.devToolsExtension() : f => f
+const createStoreWithMiddleware = applyMiddleware(Async)(createStore);
 
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
+  <Provider store={createStoreWithMiddleware(reducers, ReduxDevTools)}>
     <App />
   </Provider>
   , document.querySelector('.container'));
